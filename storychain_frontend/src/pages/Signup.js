@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Loader from "../components/Loader";
+import Alert from "../components/Alert";
 
 /**
  * PUBLIC_INTERFACE
@@ -21,7 +22,8 @@ export default function Signup() {
     if (res.success) {
       navigate("/stories", { replace: true });
     } else {
-      setErr(res.message || "Signup failed");
+      // Show specific backend error message if available; keep a safe fallback
+      setErr(res.message || "Signup failed. Please try again.");
     }
   };
 
@@ -35,7 +37,7 @@ export default function Signup() {
           <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} required placeholder="you@example.com"/>
           <label>Password</label>
           <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} required placeholder="••••••••"/>
-          {err && <div className="error">{err}</div>}
+          {err && <Alert variant="error">{err}</Alert>}
           <button className="btn-primary" type="submit" disabled={loading}>{loading ? <Loader text="Creating account"/> : "Sign Up"}</button>
         </form>
         <p className="muted">Already have an account? <Link to="/login">Log in</Link></p>
@@ -54,6 +56,5 @@ h2{margin:0 0 6px 0}
 label{font-size:12px;color:#6b7280}
 input{padding:10px 12px;border-radius:10px;border:1px solid rgba(17,24,39,.12);outline:none}
 input:focus{box-shadow:0 0 0 4px rgba(37,99,235,.15)}
-.error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.35);padding:8px 10px;border-radius:8px;color:#b91c1c;font-size:13px}
 .btn-primary{margin-top:8px;background:linear-gradient(135deg,rgba(37,99,235,.95),rgba(37,99,235,.85));color:#fff;border:1px solid transparent;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer}
 `;

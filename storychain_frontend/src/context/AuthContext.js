@@ -72,7 +72,8 @@ export function AuthProvider({ children }) {
       setUser(userInfo || { email });
       return { success: true };
     } catch (e) {
-      return { success: false, message: e?.response?.data?.message || "Login failed" };
+      // e is normalized by apiClient interceptor
+      return { success: false, message: e?.message || "Login failed" };
     } finally {
       setLoading(false);
     }
@@ -91,7 +92,8 @@ export function AuthProvider({ children }) {
       setUser(userInfo || { email });
       return { success: true };
     } catch (e) {
-      return { success: false, message: e?.response?.data?.message || "Signup failed" };
+      // e is normalized by apiClient interceptor
+      return { success: false, message: e?.message || "Signup failed" };
     } finally {
       setLoading(false);
     }
